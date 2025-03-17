@@ -15,7 +15,7 @@ export class Content {
 
         this.spriteSheet_player = await Texture.loadTexture(gl, "assets/char/spritesheet_players.png");
         this.spriteSheet_lvl = await Texture.loadTexture(gl, "assets/lvl/platformIndustrial_sheet.png");
-        this.backgroundTextrue = await Texture.loadTexture(gl, "assets/industrial-background.jpg");
+        this.backgroundTextrue = await Texture.loadTexture(gl, "assets/industrial-background.jpg");//"assets/purple.png"
 
         await this.loadSpriteSheet();
     }

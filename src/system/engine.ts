@@ -1,6 +1,9 @@
 /* manage */
 
 import { vec2 } from "gl-matrix";
+import { SpriteRenderer } from "./sprite-renderer";
+import { EffectFactory } from "./effects-factory";
+import { Content } from "./content";
 
 export class Engine {
 
@@ -10,6 +13,11 @@ export class Engine {
 
     //timer var
     private lastTime = 0;
+
+    //sprite renderer
+    public spriteRenderer!: SpriteRenderer;
+    public effectsFactory!: EffectFactory;
+    
 
     //engine's essential functions
     public clientBounds = vec2.create(); //Boarder stuff
@@ -33,7 +41,12 @@ export class Engine {
         this.clientBounds[1] = this.canvas.height;
 
         //enter content and sprite stuff here....
-  
+        await Content.initialise(this.gl);
+        
+        this.spriteRenderer = new SpriteRenderer(this.gl, this.canvas.width, this.canvas.height);
+        await this.spriteRenderer.initialise();
+
+        this.effectsFactory = new EffectFactory(this.gl, this.canvas.width, this.canvas.height);
     }
 
     public draw(): void {
@@ -41,6 +54,7 @@ export class Engine {
         //delta timer
         const now = performance.now();
         const dt = now - this.lastTime;
+        this.lastTime = now;
 
         //access delta timer within the onUpdate function
         this.onUpdate(dt);
