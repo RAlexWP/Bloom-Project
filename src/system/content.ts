@@ -1,3 +1,4 @@
+import { Rect } from "./rect";
 import { Sprite } from "./sprite";
 import { Texture } from "./texture";
 
@@ -22,10 +23,47 @@ export class Content {
 
     private static async loadSpriteSheet() {
 
-        const sheetXmlReq_player = await fetch("assets/spritesheet_players.xml");
-        const sheetXmlReq_lvl = await fetch("assets/platformIndustrial_sheet.xml");
+        const sheetXmlReq_player = await fetch("assets/char/spritesheet_players.xml");
+        const sheetXmlText_player = await sheetXmlReq_player.text();
+
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(sheetXmlText_player, "text/xml");
+
+        xmlDoc.querySelectorAll("SubTexture").forEach((SubTexture) => {
+            
+            const name = SubTexture.getAttribute("name")!.replace(".png", "");
+            const x = parseInt(SubTexture.getAttribute("x")!);
+            const y = parseInt(SubTexture.getAttribute("y")!);
+            const width = parseInt(SubTexture.getAttribute("width")!);
+            const height = parseInt(SubTexture.getAttribute("height")!);
+
+            const drawRect = new Rect(0, 0, width, height);
+            const sourceRect = new Rect(x, y, width - 1, height - 1);//-1 fixing arterfacts
+
+            this.sprites[name] = new Sprite(this.spriteSheet_player, drawRect, sourceRect);
+        });
 
 
+
+        const sheetXmlReq_lvl = await fetch("assets/lvl/platformIndustrial_sheet.xml");
+        const sheetXmlText_lvl = await sheetXmlReq_lvl.text();
+
+        const parser_lvl = new DOMParser();
+        const xmlDoc_lvl = parser_lvl.parseFromString(sheetXmlText_lvl, "text/xml");
+
+        xmlDoc_lvl.querySelectorAll("SubTexture").forEach((SubTexture) => {
+            
+            const name = SubTexture.getAttribute("name")!.replace(".png", "");
+            const x = parseInt(SubTexture.getAttribute("x")!);
+            const y = parseInt(SubTexture.getAttribute("y")!);
+            const width = parseInt(SubTexture.getAttribute("width")!);
+            const height = parseInt(SubTexture.getAttribute("height")!);
+
+            const drawRect = new Rect(0, 0, width, height);
+            const sourceRect = new Rect(x, y, width - 1, height - 1);//-1 fixing arterfacts
+
+            this.sprites[name] = new Sprite(this.spriteSheet_lvl, drawRect, sourceRect);
+        });
     }
 
 }

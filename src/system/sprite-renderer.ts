@@ -104,7 +104,7 @@ export class SpriteRenderer {
 
         /* TRANSPARCY */
         this.gl.enable(this.gl.BLEND);
-        this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_DST_ALPHA);
+        this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
 
         this.gl.useProgram(this.program);
         this.gl.uniformMatrix4fv(this.projectiveViewMatrixLocation, false,
