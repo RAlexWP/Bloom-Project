@@ -56,6 +56,7 @@ export class FramebufferUtil {
         return texture!;
     }
 
+    //setup floating point framebuffer to render scene to
     public static createFramebufferWith2ColorAttachments(
         gl: WebGL2RenderingContext, width: number, height: number) {
 
@@ -67,13 +68,13 @@ export class FramebufferUtil {
         const texture1 = this.createEmptyTexture(gl, width, height);
 
         //attach texture to framebuffer
-        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT10,
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
             gl.TEXTURE_2D, texture, 0);
 
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT1,
-            gl.TEXTURE_2D, texture, 0);
+            gl.TEXTURE_2D, texture1, 0);
 
-        if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) == gl.FRAMEBUFFER_COMPLETE) {
+        if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
             throw new Error("Framebuffer incomplete");
         }
 

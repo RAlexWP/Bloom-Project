@@ -2,7 +2,7 @@
 
 import { vec2 } from "gl-matrix";
 import { SpriteRenderer } from "./sprite-renderer";
-//import { EffectFactory } from "./effects-factory";
+import { EffectFactory } from "./effects-factory";
 import { Content } from "./content";
 import { InputManager } from "./input-manager";
 
@@ -18,7 +18,7 @@ export class Engine {
     //sprite renderer
     public spriteRenderer!: SpriteRenderer;
     public InputManager = new InputManager();
-    //public effectsFactory!: EffectFactory;
+    public effectsFactory!: EffectFactory;
     
 
     //engine's essential functions
@@ -49,7 +49,7 @@ export class Engine {
         this.spriteRenderer = new SpriteRenderer(this.gl, this.canvas.width, this.canvas.height);
         await this.spriteRenderer.initialise();
 
-        //this.effectsFactory = new EffectFactory(this.gl, this.canvas.width, this.canvas.height);
+        this.effectsFactory = new EffectFactory(this.gl, this.canvas.width, this.canvas.height);
     }
 
     public draw(): void {
